@@ -68,10 +68,10 @@ export default class Base extends Component.extend(DraggableColumnMixin) {
     return cssStyleify(this.column.getProperties(['width']));
   }
 
-  @computed('column.align', function () {
+  get align() {
+    debugger
     return `align-${this.column.align}`;
-  })
-  align;
+  }
 
   /**
    * @property label
