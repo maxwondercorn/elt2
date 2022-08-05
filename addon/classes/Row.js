@@ -1,5 +1,4 @@
 import ObjectProxy from '@ember/object/proxy';
-import { computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import classic from 'ember-classic-decorator';
 
