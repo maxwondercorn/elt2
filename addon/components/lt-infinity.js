@@ -1,10 +1,8 @@
 import classic from 'ember-classic-decorator';
-import { classNames } from '@ember-decorators/component';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 
 @classic
-@classNames('lt-infinity')
 export default class LtInfinityComponent extends Component {
   @service
   inViewport;
