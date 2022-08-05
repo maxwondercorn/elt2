@@ -6,7 +6,6 @@ import {
   tagName,
 } from '@ember-decorators/component';
 import { computed } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import Component from '@ember/component';
 import { htmlSafe } from '@ember/template';
 
@@ -28,8 +27,9 @@ import { htmlSafe } from '@ember/template';
 export default class Base extends Component {
   enableScaffolding = false;
 
-  @readOnly('column.sorted')
-  isSorted;
+  get isSorted() {
+    return this.column.isSorted;
+  }
 
   @computed('enableScaffolding', 'column.width')
   get style() {
@@ -46,7 +46,6 @@ export default class Base extends Component {
     return columnWidth ? htmlSafe(`width: ${columnWidth};`) : null;
   }
 
-  @computed('column.align')
   get align() {
     return `align-${this.column.align}`;
   }
@@ -93,8 +92,8 @@ export default class Base extends Component {
    */
   @computed('column.format', 'rawValue')
   get value() {
-    let rawValue = this.rawValue;
-    let format = this.column.format;
+    const rawValue = this.rawValue;
+    const format = this.column.format;
 
     if (format && typeof format === 'function') {
       return format.call(this, rawValue);

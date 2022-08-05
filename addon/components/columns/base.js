@@ -5,7 +5,6 @@ import {
   classNameBindings,
   tagName,
 } from '@ember-decorators/component';
-import { readOnly, oneWay } from '@ember/object/computed';
 import { set } from '@ember/object';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -39,30 +38,35 @@ import cssStyleify from 'ember-light-table/utils/css-styleify';
   'column.classNames'
 )
 export default class Base extends Component.extend(DraggableColumnMixin) {
-  @readOnly('column.isGroupColumn')
-  isGroupColumn;
+  get isGroupColumn() {
+    return this.column.isGroupColumn;
+  }
 
-  @readOnly('column.sortable')
-  isSortable;
+  get isSortable() {
+    return this.column.sortable;
+  }
 
-  @readOnly('column.sorted')
-  isSorted;
+  get isSorted() {
+    return this.column.sorted;
+  }
 
-  @readOnly('column.hideable')
-  isHideable;
+  get isHideable() {
+    return this.column.hideable;
+  }
 
-  @readOnly('column.resizable')
-  isResizable;
+  get isResizable() {
+    return this.column.resizable;
+  }
 
-  @readOnly('column.draggable')
-  isDraggable;
+  get isDraggable() {
+    return this.column.draggable;
+  }
 
   isResizing = false;
 
-  @computed('column.width', function () {
+  get style() {
     return cssStyleify(this.column.getProperties(['width']));
-  })
-  style;
+  }
 
   @computed('column.align', function () {
     return `align-${this.column.align}`;
@@ -73,8 +77,10 @@ export default class Base extends Component.extend(DraggableColumnMixin) {
    * @property label
    * @type {String}
    */
-  @oneWay('column.label')
-  label;
+
+  get label() {
+    return this.column.label;
+  }
 
   /**
    * @property table
