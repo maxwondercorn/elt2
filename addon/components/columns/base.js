@@ -1,4 +1,4 @@
-import DraggableColumn from './draggable-column';
+import DraggableColumn from '../draggable-column';
 import classic from 'ember-classic-decorator';
 import {
   classNames,
