@@ -313,7 +313,7 @@ export default class LightTable extends Component {
       return;
     }
 
-    this.send('beforeResponsiveChange', matches);
+    this.tableBeforeResponsiveChange(matches);
 
     if (!isNone(breakpoints)) {
       Object.keys(breakpoints).forEach((b) => {
@@ -333,7 +333,7 @@ export default class LightTable extends Component {
       });
     }
 
-    this.send('afterResponsiveChange', matches);
+    this.tableAfterResponsiveChange(matches);
   }
 
   _displayColumns(numColumns) {
@@ -362,7 +362,7 @@ export default class LightTable extends Component {
    * @param  {Array} matches list of matching breakpoints
    */
   @action
-  beforeResponsiveChange(/* matches */) {
+  tableBeforeResponsiveChange(/* matches */) {
     this.onBeforeResponsiveChange &&
       this.onBeforeResponsiveChange(...arguments);
   }
@@ -375,7 +375,7 @@ export default class LightTable extends Component {
    * @param  {Array} matches list of matching breakpoints
    */
   @action
-  afterResponsiveChange(/* matches */) {
+  tableAfterResponsiveChange(/* matches */) {
     this.onAfterResponsiveChange && this.onAfterResponsiveChange(...arguments);
   }
 }
