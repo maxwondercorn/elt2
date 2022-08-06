@@ -3,7 +3,6 @@ import { tagName } from '@ember-decorators/component';
 import { observes } from '@ember-decorators/object';
 import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { readOnly } from '@ember/object/computed';
 import { A as emberArray } from '@ember/array';
 import Component from '@ember/component';
 import { guidFor } from '@ember/object/internals';
@@ -205,12 +204,7 @@ export default class LightTable extends Component {
    * @type {Object}
    * @private
    */
-  @(computed(
-    'estimatedRowHeight',
-    'height',
-    'occlusion',
-    'shouldRecycle'
-  ).readOnly())
+  @computed('estimatedRowHeight', 'height', 'occlusion', 'shouldRecycle')
   get sharedOptions() {
     return {
       height: this.height,
@@ -222,8 +216,9 @@ export default class LightTable extends Component {
     };
   }
 
-  @readOnly('table.visibleColumns')
-  visibleColumns;
+  get visibleColumns() {
+    return this.table.visibleColumns;
+  }
 
   /**
    * Calculates the total width of the visible columns via their `width`
@@ -238,7 +233,6 @@ export default class LightTable extends Component {
    * @type {Number}
    * @private
    */
-  @computed('visibleColumns.@each.width')
   get totalWidth() {
     let visibleColumns = this.visibleColumns;
     let widths = visibleColumns.getEach('width');
@@ -268,7 +262,6 @@ export default class LightTable extends Component {
     return `${totalWidth}${unit}`;
   }
 
-  @computed('height', 'occlusion', 'scrollbarThickness.thickness', 'totalWidth')
   get style() {
     let totalWidth = this.totalWidth;
     let style = { height: this.height };
