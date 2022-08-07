@@ -4,7 +4,6 @@ import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { A as emberArray } from '@ember/array';
 import Component from '@ember/component';
-import { removeObserver } from '@ember/object/observers';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty, isNone } from '@ember/utils';
 import { assert } from '@ember/debug';
@@ -385,6 +384,6 @@ export default class LightTable extends Component {
 
   willDestroy() {
     super.willDestroy(...arguments);
-    removeObserver('table.allColumns.[]', this, 'onMediaChange');
+    this.removeObserver('table.allColuns.[]', this, 'onMediaChange');
   }
 }
