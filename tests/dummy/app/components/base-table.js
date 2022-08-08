@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import Table from 'ember-light-table';
-import { restartableTask } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class BaseTable extends Component {
@@ -28,7 +28,7 @@ export default class BaseTable extends Component {
 
     // Setup initial sort column
     if (sortColumn) {
-      sortColumn.set('sorted', true);
+      sortColumn.sorted = true;
     }
 
     this.table = table;
@@ -60,14 +60,20 @@ export default class BaseTable extends Component {
     }
   }
 
+  @restartableTask *setRows(rows) {
+    this.table.setRows([]);
+    yield timeout(100); // Allows isLoading state to be shown
+    this.table.setRows(rows);
+  }
+
   @action
   onColumnClick(column) {
     if (column.sorted) {
       this.dir = column.ascending ? 'asc' : 'desc';
-      this.sort = column.get('valuePath');
+      this.sort = column.valuePath;
       this.canLoadMore = true;
       this.page = 0;
-      this.args.model.clear();
+      this.setRows.perform(this.table.rows);
     }
   }
 }
