@@ -70,7 +70,7 @@ export default class TableHeader extends Component {
 
     sourceColumn = column;
     this.set('isDragging', true);
-    this.onColumnDrag(sourceColumn, ...arguments);
+    this.onColumnDrag && this.onColumnDrag(sourceColumn, ...arguments);
 
     /*
      NOTE: This is a fix for Firefox to prevent the click event
@@ -120,7 +120,7 @@ export default class TableHeader extends Component {
      drop did not happen.
      */
     if (sourceColumn) {
-      this.onColumnDrop(sourceColumn, false, ...arguments);
+      this.onColumnDrop && this.onColumnDrop(sourceColumn, false, ...arguments);
       sourceColumn = null;
     }
 
@@ -151,7 +151,7 @@ export default class TableHeader extends Component {
 
       this.setProperties({ isDragTarget: false, isDragging: false });
 
-      this.onColumnDrop(sourceColumn, true, ...arguments);
+      this.onColumnDrop && this.onColumnDrop(sourceColumn, true, ...arguments);
       sourceColumn = null;
     }
   }
@@ -160,8 +160,4 @@ export default class TableHeader extends Component {
     super.destroy(...arguments);
     cancel(this._clickResetTimer);
   }
-
-  // Noop for passed actions
-  onColumnDrag() {}
-  onColumnDrop() {}
 }
